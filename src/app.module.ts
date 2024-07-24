@@ -16,8 +16,9 @@ import { PostagemModule } from './postagem/postagem.module';
       database: 'db_blogpessoal', // qual db
       entities: [Postagem], // vetor de registro de tabelas criadas
       synchronize: true, // sincronização do typeORM com tabelas , criando automaticamente 
+      logging: true, // Mostra as instruções sql da busca - usa apenas no desenvolvimento 
     }),
-    PostagemModule, // Reconhecer este modulo
+    PostagemModule, // Reconhecer este modulo que está registrada todas as Classes que vão compor esse recurso 
   ],
   controllers: [],
   providers: [],

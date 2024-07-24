@@ -1,7 +1,7 @@
 // Classe de serviço responsavel de criar e implementar métodos (crud) para manipulaçao do banco de dados
 
-import { Injectable } from "@nestjs/common";
-import { Repository } from "typeorm"; // Trás interface repository
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { DeleteResult, ILike, Repository } from "typeorm"; // Trás interface repository
 import { Postagem } from "../entities/postagem.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -19,4 +19,53 @@ export class PostagemService{
         // na assincrona, uma função n depende de outra pra ser executada (busca em segundo plano, e site funcionando normalmente)
         // joga a busca em segundo plano, pra n travar o resto das features 
     }
+
+    async findById(id: number): Promise<Postagem>{ // Retorna apenas um objeto
+
+        let buscaPostagem = await this.postagemRepository.findOne({ // Trás apenas uma ocorrencia em que tem o id
+            where: { // criterio id
+                id
+            }
+        }) ;
+
+        if(!buscaPostagem) // Se não achar a postagem 
+            throw new HttpException('Postagem não encontrada', HttpStatus.NOT_FOUND) 
+        
+        return buscaPostagem; // retorna o objeto encontrado 
+    }
+
+    async findByTitle(titulo: string): Promise<Postagem[]>{ //Retorna um array que possui em alguma parte, o titulo com o LIKE %
+        return await this.postagemRepository.find({
+            where: {
+                titulo: ILike(`%${titulo}%`) // Titulo que contenha alguma palavra na frase com (Insensitive Like) 
+               
+            }
+        })
+    }
+
+    async create(postagem: Postagem): Promise<Postagem>{ // Confirmação se a postagem foi criada 
+        return await this.postagemRepository.save(postagem) // Salvar no banco o objeto 
+    }
+
+    async update(postagem: Postagem):  Promise<Postagem>{
+        let buscaPostagem: Postagem = await this.findById(postagem.id) //Busca pelo id da postagem que quer atualizar, é o que diferencia do create  
+
+        if(!buscaPostagem || !postagem.id){ // Se for nula e o id não existir, exibe um erro
+            throw new HttpException('Postagem não encontrada!', HttpStatus.NOT_FOUND)
+        }
+
+        return await this.postagemRepository.save(postagem) // Se achou, salva o novo objeto postagem no lugar do outro 
+    }
+
+    
+    async delete(id: number): Promise<DeleteResult>{ //Não devolve nada, pois exluiu - esse objeto serve para verificar se apagou ou nao 
+
+        let buscaPostagem = await this.findById(id)
+
+        if(!buscaPostagem) 
+            throw new HttpException('Postagem não encontrada', HttpStatus.NOT_FOUND) 
+        
+        return await this.postagemRepository.delete(id); 
+    }
+    
 }

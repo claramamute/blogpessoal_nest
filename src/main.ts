@@ -9,4 +9,4 @@ async function bootstrap() {
   app.enableCors() // Habilita para o front conversar com o back (requisições de servidores diferentes) cross origin resource sharing
   await app.listen(4000); //mudar porta para 4000
 }
-bootstrap();
+bootstrap(); //funcao que sobe a aplicação 
