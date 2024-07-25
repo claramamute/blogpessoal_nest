@@ -41,7 +41,7 @@ export class PostagemController{
         return this.postagemService.update(postagem)
     }
 
-    @Delete()
+    @Delete('/:id')
     @HttpCode(HttpStatus.NO_CONTENT) // Confirmar que foi excluido, sem conteudo 204
     delete(@Param('id', ParseIntPipe) id: number){
         return this.postagemService.delete(id)

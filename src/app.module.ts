@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Postagem } from './postagem/entities/postagem.entity';
 import { PostagemModule } from './postagem/postagem.module';
+import { TemaModule } from './tema/tema.module';
+import { Tema } from './tema/entities/tema.entity';
 
 @Module({
   imports: [  // Criar a conexão com banco de dados
@@ -14,11 +16,12 @@ import { PostagemModule } from './postagem/postagem.module';
       username: 'root',
       password: 'root',
       database: 'db_blogpessoal', // qual db
-      entities: [Postagem], // vetor de registro de tabelas criadas
+      entities: [Postagem, Tema], // Vetor para registrar tabelas 
       synchronize: true, // sincronização do typeORM com tabelas , criando automaticamente 
       logging: true, // Mostra as instruções sql da busca - usa apenas no desenvolvimento 
     }),
-    PostagemModule, // Reconhecer este modulo que está registrada todas as Classes que vão compor esse recurso 
+    PostagemModule,     // Reconhecer este modulo que está registrada todas as Classes que vão compor esse recurso 
+    TemaModule
   ],
   controllers: [],
   providers: [],
