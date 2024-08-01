@@ -3,6 +3,7 @@
 import { IsNotEmpty } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Tema } from "../../tema/entities/tema.entity";
+import { Usuario } from "../../usuario/entities/usuario.entity";
 
 //Dizer para o Nest e typeORM que precisa pegar essa classe, transformar em entidade (tabelas) no banco de dados
 
@@ -32,5 +33,8 @@ export class Postagem{ // Classe postagem e seus atributos
     }) 
     tema: Tema; //Objeto tema dentro da classe postagem - associação
 
-
+    @ManyToOne(() => Usuario, (usuario) => usuario.postagem, { 
+        onDelete: "CASCADE" 
+    }) 
+    usuario: Usuario; 
 }

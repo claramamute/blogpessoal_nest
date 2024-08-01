@@ -19,7 +19,8 @@ export class PostagemService{
         return await this.postagemRepository.find({//Espera achar o objeto
 
             relations:{ //Pega relacionamentos dentro da classe
-                tema: true //quando consultar todas as postagens, exibe o tema que está associado
+                tema: true, //quando consultar todas as postagens, exibe o tema que está associado
+                usuario: true
             }
         }) 
         // select * from tb_postagens
@@ -34,7 +35,8 @@ export class PostagemService{
                 id
             },
             relations:{ 
-                tema: true 
+                tema: true,
+                usuario: true
             }
         }) ;
 
@@ -51,7 +53,8 @@ export class PostagemService{
                
             },
             relations:{ 
-                tema: true 
+                tema: true,
+                usuario: true
             }
         })
     }
