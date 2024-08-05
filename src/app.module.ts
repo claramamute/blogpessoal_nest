@@ -19,7 +19,7 @@ import { Usuario } from './usuario/entities/usuario.entity';
       database: 'db_blogpessoal', // qual db
       entities: [Postagem, Tema, Usuario], // Vetor para registrar tabelas 
       synchronize: true, // sincronização do typeORM com tabelas , criando automaticamente 
-      logging: true, // Mostra as instruções sql da busca - usa apenas no desenvolvimento 
+      // logging: true, // Mostra as instruções sql da busca - usa apenas no desenvolvimento 
     }),
     PostagemModule,     // Reconhecer este modulo que está registrada todas as Classes que vão compor esse recurso 
     TemaModule,

@@ -21,6 +21,14 @@ export class PostagemService{
             relations:{ //Pega relacionamentos dentro da classe
                 tema: true, //quando consultar todas as postagens, exibe o tema que está associado
                 usuario: true
+            },
+            select: {
+                usuario: {
+                    nome: true,
+                    usuario: true,
+                    senha: false,
+                    foto: true
+                }
             }
         }) 
         // select * from tb_postagens
