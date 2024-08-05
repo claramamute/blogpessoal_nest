@@ -5,9 +5,12 @@ import { PostagemService } from "../services/postagem.service";
 import { Postagem } from "../entities/postagem.entity";
 import { Transform, TransformFnParams } from "class-transformer";
 import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Postagem')
 @UseGuards(JwtAuthGuard)
-@Controller('/postagens') //Passa o caminho do recurso
+@Controller("/postagens")
+@ApiBearerAuth()
 export class PostagemController{
     
     constructor(private readonly postagemService: PostagemService){} // objeto da classe postagem service apenas para ler
